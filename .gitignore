@@ -1,0 +1,34 @@
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio files
+.vs/
+
+# Rider files
+.idea/
+
+# DotNet Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+.nuget/
+
+# Visual Studio Code files
+.vscode/
+
+# Logs
+*.log
+
+# Other
+*.DS_Store

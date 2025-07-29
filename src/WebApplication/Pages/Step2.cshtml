@@ -1,0 +1,26 @@
+@page
+@model PathbitLevel2Challenge.WebApplication.Pages.Step2Model
+@{
+  ViewData["Title"] = "Etapa 2 - Dados Financeiros";
+}
+
+<h2>Etapa 2: Dados Financeiros</h2>
+
+<form method="post">
+  <div>
+    <label>Renda:</label>
+    <input asp-for="Customer.FinancialData.Income" />
+    <span asp-validation-for="Customer.FinancialData.Income"></span>
+  </div>
+  <div>
+    <label>Patrimônio:</label>
+    <input asp-for="Customer.FinancialData.Assets" />
+    <span asp-validation-for="Customer.FinancialData.Assets"></span>
+  </div>
+
+  <button type="submit">Próximo</button>
+</form>
+
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+}

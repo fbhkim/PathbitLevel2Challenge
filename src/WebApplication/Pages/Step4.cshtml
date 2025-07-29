@@ -1,0 +1,20 @@
+@page
+@model Step4Model
+<h2>Cadastro - Etapa 4: Dados de Segurança</h2>
+<form method="post" asp-page="/Confirmation">
+  <div>
+    <label>Senha</label>
+    <input type="password" asp-for="SecurityData.Password" required />
+    <span asp-validation-for="SecurityData.Password"></span>
+  </div>
+  <div>
+    <label>Confirmação de Senha</label>
+    <input type="password" asp-for="SecurityData.ConfirmPassword" required />
+    <span asp-validation-for="SecurityData.ConfirmPassword"></span>
+  </div>
+  <button type="submit">Finalizar</button>
+</form>
+
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+}
