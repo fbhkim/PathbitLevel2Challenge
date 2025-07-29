@@ -10,17 +10,15 @@ namespace PathbitLevel2Challenge.WebApplication.Pages
   {
     [BindProperty]
     public Customer Customer { get; set; } = new Customer();
-    public IActionResult OnGet()
+
+    public void OnGet()
     {
-      var customerBytes = HttpContext.Session.Get("Customer");
+      var customerJson = HttpContext.Session.GetString("Customer");
 
-      if (customerBytes == null)
-        return RedirectToPage("/Index"); // Redireciona caso a sessão tenha expirado
-
-      var customerJson = Encoding.UTF8.GetString(customerBytes);
-      Customer = JsonSerializer.Deserialize<Customer>(customerJson) ?? new Customer();
-
-      return Page();
+      if (!string.IsNullOrEmpty(customerJson))
+      {
+        Customer = JsonSerializer.Deserialize<Customer>(customerJson) ?? new Customer();
+      }
     }
 
     public IActionResult OnPost()
@@ -28,8 +26,16 @@ namespace PathbitLevel2Challenge.WebApplication.Pages
       if (!ModelState.IsValid)
         return Page();
 
-      var customerJson = JsonSerializer.Serialize(Customer);
-      HttpContext.Session.Set("Customer", Encoding.UTF8.GetBytes(customerJson));
+      var customerJson = HttpContext.Session.GetString("Customer");
+      var existingCustomer = customerJson != null
+          ? JsonSerializer.Deserialize<Customer>(customerJson) ?? new Customer()
+          : new Customer();
+
+      existingCustomer.AddressData = Customer.AddressData;
+
+      var updatedJson = JsonSerializer.Serialize(existingCustomer);
+      var updatedBytes = Encoding.UTF8.GetBytes(updatedJson);
+      HttpContext.Session.Set("Customer", updatedBytes);
 
       return RedirectToPage("/Step3");
     }

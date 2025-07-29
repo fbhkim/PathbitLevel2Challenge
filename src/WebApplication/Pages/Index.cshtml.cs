@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PathbitLevel2Challenge.Domain.Models;
 using System.Text.Json;
+using System.Text;
 
 namespace PathbitLevel2Challenge.WebApplication.Pages;
 
 public class IndexModel : PageModel
 {
   [BindProperty]
-  public Customer Customer { get; set; }
+  public Customer Customer { get; set; } = new Customer();
 
   public void OnGet()
   {
@@ -27,7 +28,10 @@ public class IndexModel : PageModel
     if (!ModelState.IsValid)
       return Page();
 
+    // Salva o objeto completo na sessão
     HttpContext.Session.SetString("Customer", JsonSerializer.Serialize(Customer));
+
     return RedirectToPage("/Step2");
   }
+
 }
