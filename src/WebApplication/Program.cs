@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 
-// Adicione o serviço de sessão aqui
+
 builder.Services.AddSession(options =>
 {
   options.IdleTimeout = TimeSpan.FromMinutes(30);

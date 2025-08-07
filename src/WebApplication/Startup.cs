@@ -16,6 +16,6 @@ public class Startup
   public void Configure(IApplicationBuilder app)
   {
     app.UseSession();
-    // Restante da configuração já está no Program.cs
+   
   }
 }

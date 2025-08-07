@@ -12,13 +12,13 @@ class Program
 {
   static async Task Main(string[] args)
   {
-    // Carrega configuração
+   
     var configuration = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
         .Build();
 
-    // Cria conexão com RabbitMQ
+    
     var rabbitMqConnectionString = configuration["RabbitMQConnectionString"];
     if (string.IsNullOrEmpty(rabbitMqConnectionString))
     {
@@ -33,7 +33,7 @@ class Program
 
     var messageQueueService = new MessageQueueService(factory);
 
-    // Cria client do SendGrid
+    
     var sendGridApiKey = configuration["SendGridApiKey"];
     if (string.IsNullOrEmpty(sendGridApiKey))
     {
@@ -44,7 +44,7 @@ class Program
     var sendGridClient = new SendGridClient(sendGridApiKey);
     var emailSenderService = new EmailSenderService(sendGridClient);
 
-    // Consome fila
+    
     messageQueueService.Consume<Customer>("cadastro.em.analise.email", async (customer) =>
     {
       await emailSenderService.SendEmailAsync(customer);

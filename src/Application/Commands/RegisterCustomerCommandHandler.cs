@@ -24,7 +24,7 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
 
   public async Task<string> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
   {
-    // Garantir que AddressData e CEP não são nulos
+    
     if (request.AddressData?.CEP is null)
       throw new ArgumentNullException(nameof(request.AddressData.CEP), "CEP é obrigatório.");
 
@@ -37,18 +37,18 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
     request.AddressData.City = cepData.City;
     request.AddressData.State = cepData.State;
 
-    // Validar SecurityData
+   
     if (string.IsNullOrWhiteSpace(request.SecurityData?.Password))
       throw new ArgumentNullException(nameof(request.SecurityData.Password), "Senha é obrigatória.");
 
-    // Validar dados restantes
+    
     if (request.BasicData is null)
       throw new ArgumentNullException(nameof(request.BasicData), "Dados básicos são obrigatórios.");
 
     if (request.FinancialData is null)
       throw new ArgumentNullException(nameof(request.FinancialData), "Dados financeiros são obrigatórios.");
 
-    // Criar o cliente
+    
     var customer = new Customer
     {
       Id = Guid.NewGuid().ToString(),
@@ -62,10 +62,10 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
       CreatedAt = DateTime.UtcNow
     };
 
-    // Salvar no MongoDB
+   
     await _customerRepository.AddAsync(customer);
 
-    // Enviar mensagem para a fila
+    
     await _messageQueueService.PublishAsync("cadastro.em.analise.email", customer);
 
     return customer.Id;

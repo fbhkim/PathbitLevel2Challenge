@@ -28,7 +28,7 @@ public class IndexModel : PageModel
     if (!ModelState.IsValid)
       return Page();
 
-    // Salva o objeto completo na sessão
+   
     HttpContext.Session.SetString("Customer", JsonSerializer.Serialize(Customer));
 
     return RedirectToPage("/Step2");

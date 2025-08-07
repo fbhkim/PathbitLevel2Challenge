@@ -14,7 +14,7 @@ public class Step4Model : PageModel
 
   public void OnGet()
   {
-    // Inicializa a propriedade para evitar null
+   
     SecurityData = new SecurityDataInput();
   }
 
@@ -28,7 +28,7 @@ public class Step4Model : PageModel
         ? JsonSerializer.Deserialize<Customer>(customerJson) ?? new Customer()
         : new Customer();
 
-    // A senha será hasheada na API, aqui fica temporário
+    
     customer.SecurityData = new SecurityData { PasswordHash = SecurityData.Password };
 
     var updatedJson = JsonSerializer.Serialize(customer);
